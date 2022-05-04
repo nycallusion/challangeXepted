@@ -47,7 +47,9 @@ export default function GameRoom(props) {
         return(
             <div key={i}>
                 {row.map((num,j) => 
-                    <div className={`p-10 py-5 border-2 ${j % 3 === 0 ?'border-t-black' : 'border-t-white'} ${j  === row.length-1?'border-b-black' : 'border-t-white'}`}>
+                    <div className={`p-10 py-5 border-2 ${j % 3 === 0 ?'border-t-black' : 'border-t-blue-300'} ${j  === row.length-1?'border-b-black' : 'border-t-white'}
+                    ${i % 3 === 0 ?'border-l-black' : 'border-l-blue-300'} ${i  === row.length-1?'border-r-black' : 'border-t-white'}
+                    `}>
                         <div >{num}</div>
                     </div>
                 )}
