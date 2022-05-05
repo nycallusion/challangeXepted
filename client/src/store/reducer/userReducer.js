@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import uuid from 'react-uuid';
-
+const user = `guess-${uuid()}`;
 export const userSlice = createSlice({
   name: 'authentication',
   initialState: {
     token: null,
-    user_id: null,
+    user_id: user,
     profilePic: '',
-    name: `guess-${uuid()}`,
+    name: user,
     guess:true
 
   },
@@ -29,8 +29,11 @@ export const userSlice = createSlice({
     updateUser: (state,  { payload }) => {
       state.profilePic = payload.profilePic;
     },
+    updateUsername: (state,  { payload }) => {
+      state.name = payload
+    },
 
   }
 });
 
-export const { setToken, logout , updateUser} = userSlice.actions;
+export const { setToken, logout , updateUser, updateUsername} = userSlice.actions;

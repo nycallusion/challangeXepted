@@ -12,18 +12,14 @@ const SudokuSchema = new mongoose.Schema({
     board: {
         type: String
     },
-
     solution: {
         type: String
     },
-
     players: [   
     ],
-
     playerTurn: {
         type: String
     },
-
     difficulty: {
         type: String,
     },

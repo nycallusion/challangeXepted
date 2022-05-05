@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../store/reducer/userReducer';
 export default function GoogleLogoutButton() {
     const dispatch = useDispatch();
-    const responseGoogle =  async(res) => {
+    const responseGoogle =  async() => {
         dispatch(logout());
       };
   return (

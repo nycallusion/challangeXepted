@@ -2,7 +2,8 @@ var express = require('express');
 var logger = require('morgan');
 const cors = require("cors");
 const mongodb = require('./database/mongo')
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
+const socketio = require('./socket.io/index')
 
 
 var app = express();
@@ -14,6 +15,7 @@ app.use(cors({
     origin: [
       "https://www.davidcodedesign.com",
       "http://localhost:3000",
+      
     ],
     methods: ["GET", "POST"],
     credentials: true,
