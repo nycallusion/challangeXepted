@@ -8,9 +8,9 @@ export default function ChatBox(props) {
         <div className='text-center text-xl font-bold bg-blue-300'>chat</div>
         <div className='flex flex-col overflow-ellipsis mt-2'>
         {props.messages.map((message, i) =>
-            <div className=' mt-2'>
+            <div className=' mt-2' key={i}>
                 <h1 className='text-green-500 text-center font-bold bg-blue-100 border-[.5px] border-slate-300'>{message.username}</h1>
-                <p key={i} className='bg-slate-200 text-center'>{message.message}</p>
+                <p className='bg-slate-200 text-center'>{message.message}</p>
             </div> 
         )}
         </div>

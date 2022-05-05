@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import CountDown from './CountDown';
-// import { io } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import UserList from './UserList';
 import PlayerBoard from './PlayerBoard';
 import { useNavigate } from "react-router-dom";
 import ChatBox from './ChatBox';
-import {socket} from '../middleware/socket.io'
+// import {socket} from '../middleware/socket.io'
 
 export default function GameRoom(props) {
-  // const socket = io(process.env.REACT_APP_socket_END_POINT, {
-  //   transports: ['websocket'],
-  //   withCredentials: true,
-  // });
+  const socket = io(process.env.REACT_APP_socket_END_POINT, {
+    transports: ['websocket'],
+    withCredentials: true,
+  });
   const navigate = useNavigate();
   const [board, setBoard] = useState(null);
   const [inputValue, changeInputValue] = useState([]);

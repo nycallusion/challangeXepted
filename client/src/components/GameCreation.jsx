@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {updateUsername} from '../store/reducer/userReducer'
+import { socket } from '../middleware/socket.io'
 export default function GameCreation() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -38,6 +39,7 @@ export default function GameCreation() {
       }
     );
     if (status === 200) {
+      socket.emit('create-room');
       return navigate(`/room/${data.room}`);
     }
   };
@@ -45,7 +47,9 @@ export default function GameCreation() {
   const handleChangeUsername = async() => {
     dispatch(updateUsername(`Guest ${username}-${user.user_id.slice(user.user_id.length - 6, user.user_id.length)}`))
   };
-  console.log(user.name, user.user_id)
+  useEffect(() => {
+
+  })
   return (
     <div className="w-full h-full bg-blue-100">
       {alert ? (
