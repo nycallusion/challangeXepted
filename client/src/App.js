@@ -21,7 +21,7 @@ function App() {
           </Layout>
         }
         />
-        <Route exact path="/test/:id" element={
+        <Route exact path="/test" element={
           <Layout>
             <Test/>
           </Layout>

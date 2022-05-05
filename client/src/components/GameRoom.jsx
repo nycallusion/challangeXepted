@@ -7,7 +7,7 @@ import UserList from './UserList';
 import PlayerBoard from './PlayerBoard';
 
 export default function GameRoom(props) {
-  const socket = io('http://localhost:3040', {
+  const socket = io('https://www.davidcodedesign.me/', {
     transports: ['websocket'],
     withCredentials: true,
   });
