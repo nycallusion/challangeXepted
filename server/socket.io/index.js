@@ -3,7 +3,7 @@ const convertToMilliseconds = require('../middleware/convertToMilliseconds');
 const {getAllUsers, findNextPlayer, changeScore} = require('../middleware/socket.io')
 const io = require('socket.io')(process.env.PORT2, {
     cors: {
-        origin: ["http://localhost:3000", "http://34.138.155.221", "http://www.davidcodedesign.me"]
+        origin: ["http://localhost:3000", "https://www.davidcodedesign.me","https://davidcodedesign.me"]
     }
 });
 
