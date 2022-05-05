@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const SudokuSchema = new mongoose.Schema({
-    // gameid : {
-    //     type: String
-    // },
+    gamename : {
+        type: String
+    },
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -31,6 +31,10 @@ const SudokuSchema = new mongoose.Schema({
     },
     lives: {
         type: Number,
+    },
+    active: {
+        type: Boolean,
+        default: true
     },
 
     timestamp: {

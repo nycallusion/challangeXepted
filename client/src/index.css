@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.overflow-ellipsis {
+  word-wrap: break-word
+}
+
 
 body {
   margin: 0;

@@ -6,6 +6,7 @@ import {updateUsername} from '../store/reducer/userReducer'
 export default function GameCreation() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
+    gamename:'',
     difficulty: "",
     player: "",
     timer: "",
@@ -25,6 +26,7 @@ export default function GameCreation() {
     if (!user.token) {
       return setAlert("MUST BE LOGGED IN TO CREATE GAME");
     }
+
     let { status, data } = await axios.post(
       `${process.env.REACT_APP_API}/games`,
       { form, user },
@@ -46,21 +48,6 @@ export default function GameCreation() {
   console.log(user.name, user.user_id)
   return (
     <div className="w-full h-full bg-blue-100">
-      <div>
-        {user.token || user.name !== user.user_id ? 
-        <div>
-        </div>
-          :
-        <div>
-          <div className="flex flex-col items-center">
-            <div className="p-1 w-full flex justify-center h-[50px]">
-              <input className="w-[50%] border-[1px] border-black text-center rounded-lg" value={username} placeholder='Change UserName' onChange={(e) => setUsername(e.target.value)}></input>
-            </div>
-            <button className="w-[50%] px-5 py-3 text-sm font-medium rounded-lg text-white bg-indigo-600" onClick={() => handleChangeUsername()}>Change User Name</button>
-          </div>
-        </div>
-        }
-      </div>
       {alert ? (
         <div
           className="p-4 text-red-700 border rounded border-red-900/10 bg-red-50"
@@ -71,8 +58,35 @@ export default function GameCreation() {
       ) : (
         <></>
       )}
-      <div className="p-2">
-        <label>Choose Difficulty</label>
+      <div>
+      {/* || user.name !== user.user_id */}
+        {user.token ? 
+        <div>
+        </div>
+          :
+        <div>
+          <div className="flex flex-col items-center">
+            <div className="p-1 w-full flex justify-center h-[50px]">
+              <input className="w-full border-[1px] border-black text-center rounded-lg" value={username} placeholder='Change UserName' onChange={(e) => setUsername(e.target.value)}></input>
+            </div>
+            <button className="w-[50%] px-2 py-3 text-sm font-medium rounded-lg text-white bg-indigo-600" onClick={() => handleChangeUsername()}>Change User Name</button>
+          </div>
+        </div>
+        }
+      </div>
+      <div className="p-2 flex flex-col">
+          <label className="text-center">Game Name</label>
+          <input
+            type="String"
+            name="gamename"
+            className="m-2 border-black hover:cursor-pointer p-3"
+            value={form.gamename}
+            placeholder='Name Your Game Buddy'
+            onChange={(e) => handleFormChange(e.target)}
+          />
+      </div>
+      <div className="p-2 flex flex-col">
+        <label className="text-center">Choose Difficulty</label>
         <select
           className="m-2 border-black hover:cursor-pointer"
           name="difficulty"
@@ -86,8 +100,8 @@ export default function GameCreation() {
           <option value="expert">Software Developer</option>
         </select>
       </div>
-      <div className="p-2">
-        <label>Choose Number of Players</label>
+      <div className="p-2 flex flex-col">
+        <label className="text-center">Choose Number of Players</label>
         <select
           className="m-2 border-black hover:cursor-pointer"
           name="player"
@@ -101,9 +115,9 @@ export default function GameCreation() {
           <option value="4">Party(4)</option>
         </select>
       </div>
-      <div className="p-2 flex">
-        <div className="p-2">
-          <label>Set Timer in Seconds Per Turn</label>
+      <div className="p-2 flex flex-col">
+        <div className="p-2 flex flex-col">
+          <label className="text-center">Set Timer in Seconds Per Turn</label>
           <select
             className="m-2 border-black hover:cursor-pointer"
             name="timer"
@@ -117,20 +131,21 @@ export default function GameCreation() {
             <option value="00:15:00">Party(15 min)</option>
           </select>
         </div>
-        <div className="p-2">
-          <label>Timer</label>
+        <div className="p-2 flex flex-col">
+          <label className="text-center">Custom Timer</label>
           <input
             type="tel"
             name="timer"
             className="m-2 border-black hover:cursor-pointer"
             value={form.timer}
+            placeholder='00:00:00'
             pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"
             onChange={(e) => handleFormChange(e.target)}
           />
         </div>
       </div>
-      <div className="p-2">
-        <label>Lives (MAX 10)</label>
+      <div className="p-2 flex flex-col">
+        <label className="text-center">Lives (MAX 10)</label>
         <input
           type="number"
           name="lives"

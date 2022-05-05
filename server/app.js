@@ -3,7 +3,7 @@ var logger = require('morgan');
 const cors = require("cors");
 const mongodb = require('./database/mongo')
 const indexRouter = require('./routes/index');
-const socketio = require('./socket.io/index')
+const io = require('./socket.io/index')
 
 
 var app = express();

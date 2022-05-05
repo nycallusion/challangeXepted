@@ -6,6 +6,7 @@ const Sudoku = require('../database/modals/Sudoku');
 const { v4: uuidv4 } = require('uuid');
 const convertToMilliseconds = require('../middleware/convertToMilliseconds');
 
+
 router.get('/:id', async(req, res) => {
   try {
     let game = await Sudoku.findById(req.params.id).lean()
@@ -24,7 +25,7 @@ router.get('/:id', async(req, res) => {
 
 router.post('/', authenticateToken, async(req, res) => {
   console.log(req.user)
-    const {difficulty, player, timer, lives} = req.body.form;
+    const {difficulty, player, timer, lives, gamename = `sudoku${uuidv4()}`} = req.body.form;
     const {puzzle, solution} = sudoku.create(difficulty);
     
     let players = [{name:req.body.user.name, lives, score: 0, index:0}];
@@ -38,7 +39,7 @@ router.post('/', authenticateToken, async(req, res) => {
     }
 
     const newGame = {
-        // gameid: uuidv4(),
+        gamename,
         owner: req.user.id,
         board: puzzle,
         solution,
@@ -58,6 +59,12 @@ router.post('/', authenticateToken, async(req, res) => {
       message: "Successfully Created Game Room",
       room: createGame._id,
     });
+  });
+
+  router.get('/', async(req, res) => {
+    const getAllGames = await Sudoku.find()
+    console.log(getAllGames)
+
   });
   
   module.exports = router;

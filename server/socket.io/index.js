@@ -30,10 +30,10 @@ io.on('connection', socket => {
         }
 
     })
-    socket.on('send-board', async(id) => {
-        let getBoard = await Sudoku.findById(id);
-        io.to(room).emit('gg', getBoard)
-    })
+    // socket.on('send-board', async(id) => {
+    //     let getBoard = await Sudoku.findById(id);
+    //     io.to(room).emit('gg', getBoard)
+    // })
 
     socket.on('update-sudoku', async(value) => {
         let board = await Sudoku.findById(value.id);
@@ -63,12 +63,32 @@ io.on('connection', socket => {
             }
             return players;
         }
+        if (board.playerTurn === prevPlayer) {
+            board.playerTurn = newPlayer;
+        }
         let players = changePlayer(board.players, prevPlayer, newPlayer)
         board.players = players;
         await Sudoku.updateOne({_id: board._id},board);
         io.to(id).emit('get-board', board);
-        // io.to(room).emit('gg', getBoard)
     })
+
+    socket.on('get-rooms', async(id) => {
+        const allBoard = await Sudoku.find({active:true}).lean();
+        const response = [];
+        for (let i = 0;i<allBoard.length; i++) {
+            response.push({
+                gamename: allBoard[i].gamename,
+                id: allBoard[i]._id
+            })
+        }
+        io.emit('send-rooms', response);
+    })
+
+    socket.on('send-message', async(message, username) => {
+        io.emit('receive-message', message , username);
+    })
+
+
 
 
 

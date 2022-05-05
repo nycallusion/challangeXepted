@@ -4,9 +4,7 @@ import uuid from 'react-uuid';
 export default function PlayerBoard(props) {
   const {user, owner, players, users, handlePlayerChange} = props;
   const [choice, setChoice] = useState({prev:'', new:''})
-  console.log(props.owner)
 
-  
   return (
     <div className="p-1">
       <div className="flex justify-around text-lg bg-blue-300  border-1 border-black">
