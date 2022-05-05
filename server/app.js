@@ -15,6 +15,8 @@ app.use(cors({
     origin: [
       "https://www.davidcodedesign.com",
       "http://localhost:3000",
+      "http://34.138.155.221",
+      "http://www.davidcodedesign.me"
       
     ],
     methods: ["GET", "POST"],
