@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import CountDown from './CountDown';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import UserList from './UserList';
 import PlayerBoard from './PlayerBoard';
 import { useNavigate } from "react-router-dom";
 import ChatBox from './ChatBox';
-// import {socket} from '../middleware/socket.io'
+import {socket} from '../middleware/socket.io'
 
 export default function GameRoom(props) {
-  const socket = io(process.env.REACT_APP_socket_END_POINT, {
-    transports: ['websocket'],
-    withCredentials: true,
-  });
+  // const socket = io(process.env.REACT_APP_socket_END_POINT, {
+  //   transports: ['websocket'],
+  //   withCredentials: true,
+  // });
+
   const navigate = useNavigate();
   const [board, setBoard] = useState(null);
   const [inputValue, changeInputValue] = useState([]);
   const [users, setUsers] = useState([]);
-  const [messages,setMessages] = useState([]);
+  // const [messages,setMessages] = useState([]);
   
   const {id} = useParams();
   const user = useSelector(state => state.user)
@@ -50,11 +51,11 @@ export default function GameRoom(props) {
     socket.on('users', (users) => 
       setUsers(users)
     )
-    socket.on('receive-message', (message , username) =>{
-      let cpyMsgArr = [...messages];
-      cpyMsgArr.push({message, username});
-      setMessages(cpyMsgArr);
-     })
+    // socket.on('receive-message', (message , username) =>{
+    //   let cpyMsgArr = [...messages];
+    //   cpyMsgArr.push({message, username});
+    //   setMessages(cpyMsgArr);
+    //  })
     socket.on('error', (err) => 
       navigate('/404')
     )
@@ -62,7 +63,7 @@ export default function GameRoom(props) {
     //     console.log(msg)
     // })
         //eslint-disable-next-line react-hooks/exhaustive-deps
-  })
+  },[socket])
 
   const handleValueChange = (index, value) => {
     if (index === null) {
@@ -113,12 +114,12 @@ export default function GameRoom(props) {
     socket.emit('update-player', prevPlayer, newPlayer, id);
   };
 
-  const handleSendMessage = (message) => {
-    if (message.length < 4) {
-      return alert('Message length greater than 5')
-    }
-    socket.emit('send-message', message, user.name);
-  };
+  // const handleSendMessage = (message) => {
+  //   if (message.length < 4) {
+  //     return alert('Message length greater than 5')
+  //   }
+  //   socket.emit('send-message', message, user.name);
+  // };
 
 return board ? 
   (
@@ -162,7 +163,7 @@ return board ?
       </div>
       <div className=''>
         <UserList users = {users}/>
-        <ChatBox handleSendMessage={handleSendMessage} messages={messages}/>
+        <ChatBox user={user}/>
       </div>
 
     </div>

@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react'
-// import {socket} from '../middleware/socket.io'
-import { io } from 'socket.io-client';
+import {socket} from '../middleware/socket.io'
+// import { io } from 'socket.io-client';
 
 export default function GameRooms() {
-    const socket = io(process.env.REACT_APP_socket_END_POINT, {
-        transports: ['websocket'],
-        withCredentials: true,
-      });
+    // const socket = io(process.env.REACT_APP_socket_END_POINT, {
+    //     transports: ['websocket'],
+    //     withCredentials: true,
+    //   });
     const [rooms,setRooms] = useState([]);
 
     useEffect(() => {
         socket.on('connect', () => {
-            if (!rooms.length) {
-                socket.emit('get-rooms');
-            }  
+            socket.emit('get-rooms');
         })
         socket.on('send-rooms', (rooms) => 
             setRooms(rooms)
-        )    
-    })
+        ) 
+        return function cleanup() {
+            socket.disconnect();
+          }   
+    },[socket])
 
   return (
     <div className='flex-col justify-center border-2 w-[60%]'>

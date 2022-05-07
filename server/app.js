@@ -23,4 +23,9 @@ app.use(cors({
 
 app.use('/challengexcepted', indexRouter);
 
+app.post('/test', async (req, res) => {
+  await io.emit('test', 'test');
+  res.json({message: 'send'})
+})
+
 module.exports = app;

@@ -20,6 +20,7 @@ const emitRooms = async() => {
 }
 
 io.on('connection', socket => {
+    console.log('socket')
     socket.on('join-room', async (id, user) => {
         try {
             await socket.join(id);
@@ -91,6 +92,7 @@ io.on('connection', socket => {
     socket.on('send-message', async(message, username) => {
         io.emit('receive-message', message , username);
     })
+    
     socket.on('create-room', async() => {
         const allBoard = await Sudoku.find({active:true}).lean();
         const response = [];
@@ -109,6 +111,7 @@ io.on('connection', socket => {
 
 
     socket.on("disconnect", async (reason) => {
+        console.log('hit')
         if (socket.roomID) {
             emitUsers(socket.roomID)
         }
@@ -124,3 +127,4 @@ io.on('connection', socket => {
 //     let getBoard = await Sudoku.findById(id)
 //     console.log(getBoard)
 // })
+module.exports = io
