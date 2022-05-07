@@ -89,8 +89,8 @@ io.on('connection', socket => {
         io.emit('send-rooms', response);
     })
 
-    socket.on('send-message', async(message, username) => {
-        io.emit('receive-message', message , username);
+    socket.on('send-message', async(message, username, id) => {
+        io.to(id).emit('receive-message', message , username);
     })
     
     socket.on('create-room', async() => {
@@ -104,10 +104,6 @@ io.on('connection', socket => {
         }
         io.emit('send-rooms', response);
     })
-
-
-
-
 
 
     socket.on("disconnect", async (reason) => {

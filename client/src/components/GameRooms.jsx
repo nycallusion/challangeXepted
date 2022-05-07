@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import {socket} from '../middleware/socket.io'
-// import { io } from 'socket.io-client';
+import React, { useEffect, useState, useContext } from 'react'
+import {SocketContext} from '../middleware/socket';
 
 export default function GameRooms() {
-    // const socket = io(process.env.REACT_APP_socket_END_POINT, {
-    //     transports: ['websocket'],
-    //     withCredentials: true,
-    //   });
+    const socket = useContext(SocketContext);
     const [rooms,setRooms] = useState([]);
 
     useEffect(() => {
@@ -16,10 +12,7 @@ export default function GameRooms() {
         socket.on('send-rooms', (rooms) => 
             setRooms(rooms)
         ) 
-        return function cleanup() {
-            socket.disconnect();
-          }   
-    },[socket])
+    })
 
   return (
     <div className='flex-col justify-center border-2 w-[60%]'>

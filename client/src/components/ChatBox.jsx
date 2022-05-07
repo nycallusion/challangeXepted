@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {socket} from '../middleware/socket.io'
+import React, {useEffect, useState , useContext} from 'react';
+import {SocketContext} from '../middleware/socket';
 
 export default function ChatBox(props) {
     const [message,setMessage] = useState([]);
     const [messages,setMessages] = useState([]);
+    const socket = useContext(SocketContext);
 
     const handleSendMessage = (message) => {
       if (message.length < 4) {
         return alert('Message length greater than 5')
       }
-
-      socket.emit('send-message', message, props.user.name);
+      socket.emit('send-message', message, props.user.name, props.id);
     };
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function ChatBox(props) {
         setMessages(cpyMsgArr);
        })
 
-    })
+    });
 
   return (
     <div id='chatBox' className='flex flex-col p-3 mt-3 w-[300px] border-2 ml-3'>

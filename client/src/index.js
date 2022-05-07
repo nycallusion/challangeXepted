@@ -7,18 +7,22 @@ import { Provider } from 'react-redux';
 import { store } from './store/index';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import {SocketContext, socket} from "./middleware/socket"
+
 
 let persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-   //<React.StrictMode>
+   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
+      <SocketContext.Provider value={socket}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </SocketContext.Provider>
     </Provider> 
-   //</React.StrictMode> 
+   </React.StrictMode> 
 );
 
 // If you want to start measuring performance in your app, pass a function

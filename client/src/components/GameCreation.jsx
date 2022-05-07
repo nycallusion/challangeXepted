@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useContext } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {updateUsername} from '../store/reducer/userReducer'
-import { socket } from '../middleware/socket.io'
+import {SocketContext} from '../middleware/socket';
 export default function GameCreation() {
+  const socket = useContext(SocketContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     gamename:'',
